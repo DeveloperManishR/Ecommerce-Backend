@@ -1509,7 +1509,7 @@ export const GetallCategory = async (req, res) => {
     //distinct is use for unique
     const allCategory = await productModel.distinct("category");
     console.log(allCategory);
-    return successResponse(res, allCategory);
+    return successResponseWithData(res,"category List  fetched", allCategory);
   } catch (error) {
     console.log(error);
     return ErrorResponse(res, "Error searching for Category: " + error.message);
