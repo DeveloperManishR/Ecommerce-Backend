@@ -11722,7 +11722,7 @@ export const GetSingleproductDetail = async (req, res) => {
       return ErrorResponse(res, "Product not found");
     }
 
-    return successResponse(res, product);
+    return successResponseWithData(res,"Product  fetched Sucessfully", product);
   } catch (error) {
     console.log(error);
   }
