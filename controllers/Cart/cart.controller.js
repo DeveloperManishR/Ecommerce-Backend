@@ -100,6 +100,24 @@ export const DeletefromCart = async (req, res) => {
   }
 };
 
+export const removeAllproductsFromCart=async(req,res)=>{
+  const userid = req.userid;
+
+  console.log("user",userid)
+  try{
+    
+    const deleteAllCartItems=await cartModel.deleteMany({ userid: userid })
+    if (!deleteAllCartItems) {
+      return ErrorResponse(res, "Product not found");
+    }
+    return successResponse(res, "Product removed from cart Sucessfully");
+
+
+  }catch(error){
+    console.log(error);
+  }
+}
+
 export const decreaseProductquantity = async (req, res) => {
   try {
     const userid = req.userid;
