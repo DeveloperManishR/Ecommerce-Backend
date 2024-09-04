@@ -6,14 +6,14 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    /*
-    products: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+    // orderItems: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "AllOrder",
+        
+    //   },
+    // ],
 
-      // quantity: Number,
-    },
-    */
     products: [
       {
         product: {

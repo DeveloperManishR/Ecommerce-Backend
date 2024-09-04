@@ -82,6 +82,57 @@ export const createOrder = async (req, res) => {
   }
 };
 
+/*
+export const createOrder = async (req, res) => {
+  try {
+    const {
+      orderItems,
+      totalAmount,
+      userid,
+      paymentMethod,
+      paymentStatus,
+      orderStatus,
+      selectedAddress,
+    } = req.body;
+
+    // Create the AllOrder items dynamically
+    const allOrderItems = await Promise.all(
+      orderItems.map(async (item) => {
+        const newOrderItem = new allOrderModel({
+          product: item.product,
+          quantity: item.quantity,
+          price: item.price,
+        });
+        await newOrderItem.save();
+        return newOrderItem._id; // Store the ID of the created AllOrder item
+      })
+    );
+
+    // Create the order with references to the AllOrder items
+    const createOrder = await new orderModel({
+      orderItems: allOrderItems,
+      totalAmount,
+      userid,
+      paymentMethod,
+      paymentStatus,
+      orderStatus,
+      selectedAddress,
+    }).save();
+
+    return res.status(200).json({
+      message: "Order Placed Successfully",
+      data: createOrder,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+*/
+
 export const updateOrder = async (req, res) => {
   const { status } = req.body;
   try {
