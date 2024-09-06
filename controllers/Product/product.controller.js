@@ -11768,7 +11768,7 @@ export const DeleteProduct = async (req, res) => {
       return ErrorResponse(res, "Product not found");
     }
 
-    return successResponse(res, product);
+    return successResponse(res, "Product Deleted Sucessfully");
   } catch (error) {
     console.log(error);
   }
