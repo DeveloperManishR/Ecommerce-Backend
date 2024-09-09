@@ -6,21 +6,10 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    // orderItems: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "AllOrder",
-        
-    //   },
-    // ],
-
-    products: [
+    orderItems: [
       {
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-        },
-        quantity: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "OrderItem",
       },
     ],
 
@@ -34,13 +23,8 @@ const orderSchema = new mongoose.Schema(
     },
     paymentStatus: {
       type: String,
-      //  enum: ["pending", "completed"],
-      //  default: "pending",
-    },
-    orderStatus: {
-      type: String,
-      // enum: ["pending", "completed"],
-      //   default: "pending",
+      enum: ["pending", "completed"],
+      default: "pending",
     },
 
     selectedAddress: {

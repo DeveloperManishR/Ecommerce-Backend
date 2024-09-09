@@ -1,6 +1,6 @@
 import { successResponseWithData } from "../../helpers/apiResponse.js";
 import orderModel from "../../models/Order/order.model.js";
-
+import orderItemsModel from "../../models/Order/allorder.model.js"
 export const allOrderslist = async (req, res) => {
   try {
     const userid = req.userid;
@@ -39,50 +39,8 @@ export const adminOrdersList = async (req, res) => {
   );
 };
 
-export const createOrder = async (req, res) => {
-  try {
-    const {
-      products,
-      totalAmount,
 
-      userid,
-      paymentMethod,
-      paymentStatus,
-      orderStatus,
-      selectedAddress,
-    } = req.body;
 
-    console.log(
-      products,
-      totalAmount,
-
-      userid,
-      paymentMethod,
-      paymentStatus,
-      orderStatus,
-      selectedAddress
-    );
-    const createOrder = await new orderModel({
-      products,
-      totalAmount,
-      userid,
-      paymentMethod,
-      paymentStatus,
-      orderStatus,
-      selectedAddress,
-    }).save();
-
-    return successResponseWithData(
-      res,
-      "Order Placed Sucessfully",
-      createOrder
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-/*
 export const createOrder = async (req, res) => {
   try {
     const {
@@ -98,7 +56,7 @@ export const createOrder = async (req, res) => {
     // Create the AllOrder items dynamically
     const allOrderItems = await Promise.all(
       orderItems.map(async (item) => {
-        const newOrderItem = new allOrderModel({
+        const newOrderItem = new orderItemsModel({
           product: item.product,
           quantity: item.quantity,
           price: item.price,
@@ -131,7 +89,6 @@ export const createOrder = async (req, res) => {
     });
   }
 };
-*/
 
 export const updateOrder = async (req, res) => {
   const { status } = req.body;

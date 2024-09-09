@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const allorderSchema = new mongoose.Schema(
+const ordertableSchema = new mongoose.Schema(
   {
     product: {
       type: mongoose.Schema.Types.ObjectId,
@@ -14,15 +14,15 @@ const allorderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    // orderStatus: {
-    //   type: String,
-    //   enum: ["pending", "completed"],
-    //   default: "pending",
-    // },
+    orderStatus: {
+      type: String,
+      enum: ["pending", "completed"],
+      default: "pending",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export default mongoose.model("AllOrder", allorderSchema);
+export default mongoose.model("OrderItem", ordertableSchema);
