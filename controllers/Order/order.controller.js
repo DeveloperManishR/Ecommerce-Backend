@@ -1,29 +1,33 @@
 import { successResponseWithData } from "../../helpers/apiResponse.js";
 import orderModel from "../../models/Order/order.model.js";
-import orderItemsModel from "../../models/Order/allorder.model.js"
+import orderItemsModel from "../../models/Order/allorder.model.js";
+
+
 export const allOrderslist = async (req, res) => {
   try {
     const userid = req.userid;
 
-    console.log("userid", userid);
-
     const userorders = await orderModel
       .find({ userid: userid })
-      .populate("products.product");
+      .populate({
+        path: 'orderItems',
+        populate: {
+          path: 'product',
+          model: 'Product' 
+        }
+      });
+
     return successResponseWithData(
       res,
       "Orders fetched successfully",
       userorders
     );
-    //.populate("orderby")
-    //.exec();
-    //  .populate("orderby")
 
-    // console.log("orderList", userorders);
   } catch (error) {
     console.log(error);
   }
 };
+
 
 export const adminOrdersList = async (req, res) => {
   const getAllorders = await orderModel
@@ -38,8 +42,6 @@ export const adminOrdersList = async (req, res) => {
     getAllorders
   );
 };
-
-
 
 export const createOrder = async (req, res) => {
   try {
