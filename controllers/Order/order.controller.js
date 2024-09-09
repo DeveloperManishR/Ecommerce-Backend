@@ -98,28 +98,39 @@ export const createOrder = async (req, res) => {
 };
 
 export const updateOrder = async (req, res) => {
-  const { status } = req.body;
+  const { status,orderId } = req.body;
   try {
     const productid = req.params.id;
 
-    console.log("prod");
+    console.log("status",status,orderId);
 
-    const productDetails = await orderModel.find({ _id: productid });
+     const productDetails = await orderItemsModel.findByIdAndUpdate(
+      orderId,
+      {orderStatus:status},
+      {new:true}
+     );
 
-    const updateProduct = await orderModel.findByIdAndUpdate(
-      productid,
-      {
-        orderStatus: "completed",
-        paymentStatus: "completed",
-      },
-      { new: true }
-    );
-
-    return successResponseWithData(
+     console.log(productDetails)
+     return successResponseWithData(
       res,
-      "Order successfully updated",
-      updateProduct
+      "Product Status Updated Sucessfully",
+      productDetails
     );
+
+    // const updateProduct = await orderModel.findByIdAndUpdate(
+    //   productid,
+    //   {
+    //     orderStatus: "completed",
+    //     paymentStatus: "completed",
+    //   },
+    //   { new: true }
+    // );
+
+    // return successResponseWithData(
+    //   res,
+    //   "Order successfully updated",
+    //   updateProduct
+    // );
   } catch (error) {
     console.log("err", error);
   }

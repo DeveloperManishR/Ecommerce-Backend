@@ -7,6 +7,6 @@ const app = express.Router();
 app.post("/create-order", CheckHeaderToken, createOrder);
 app.get("/users-get-all-orders", CheckHeaderToken, allOrderslist);
 app.get("/get-all-orders",CheckHeaderToken, adminOrdersList);
-app.put("/update-order/:id",CheckHeaderToken,updateOrder)
+app.put("/update-order",CheckHeaderToken,updateOrder)
 
 export default app;
