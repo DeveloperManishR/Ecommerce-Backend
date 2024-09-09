@@ -31,9 +31,14 @@ export const allOrderslist = async (req, res) => {
 
 export const adminOrdersList = async (req, res) => {
   const getAllorders = await orderModel
-    .find({})
-    .populate("products.product")
-    .populate("userid");
+    .find({}).populate({
+      path:'orderItems',    
+      populate:{
+        path: 'product',
+        model: 'Product' 
+      }
+    }).populate("userid")
+   
   console.log("getAllorders", getAllorders);
 
   return successResponseWithData(
