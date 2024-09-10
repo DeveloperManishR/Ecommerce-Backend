@@ -1,44 +1,41 @@
 import { successResponseWithData } from "../../helpers/apiResponse.js";
 import orderModel from "../../models/Order/order.model.js";
-import orderItemsModel from "../../models/Order/allorder.model.js";
-
+import orderItemsModel from "../../models/Order/orderItemsModel.js";
 
 export const allOrderslist = async (req, res) => {
   try {
     const userid = req.userid;
 
-    const userorders = await orderModel
-      .find({ userid: userid })
-      .populate({
-        path: 'orderItems',
-        populate: {
-          path: 'product',
-          model: 'Product' 
-        }
-      });
+    const userorders = await orderModel.find({ userid: userid }).populate({
+      path: "orderItems",
+      populate: {
+        path: "product",
+        model: "Product",
+      },
+    });
 
     return successResponseWithData(
       res,
       "Orders fetched successfully",
       userorders
     );
-
   } catch (error) {
     console.log(error);
   }
 };
 
-
 export const adminOrdersList = async (req, res) => {
   const getAllorders = await orderModel
-    .find({}).populate({
-      path:'orderItems',    
-      populate:{
-        path: 'product',
-        model: 'Product' 
-      }
-    }).populate("userid")
-   
+    .find({})
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "product",
+        model: "Product",
+      },
+    })
+    .populate("userid");
+
   console.log("getAllorders", getAllorders);
 
   return successResponseWithData(
@@ -98,40 +95,60 @@ export const createOrder = async (req, res) => {
 };
 
 export const updateOrder = async (req, res) => {
-  const { status,orderId } = req.body;
+  const { status, orderId } = req.body;
   try {
     const productid = req.params.id;
 
-    console.log("status",status,orderId);
+    console.log("status", status, orderId);
 
-     const productDetails = await orderItemsModel.findByIdAndUpdate(
+    const productDetails = await orderItemsModel.findByIdAndUpdate(
       orderId,
-      {orderStatus:status},
-      {new:true}
-     );
+      { orderStatus: status },
+      { new: true }
+    );
 
-     console.log(productDetails)
-     return successResponseWithData(
+    console.log(productDetails);
+    return successResponseWithData(
       res,
       "Product Status Updated Sucessfully",
       productDetails
     );
-
-    // const updateProduct = await orderModel.findByIdAndUpdate(
-    //   productid,
-    //   {
-    //     orderStatus: "completed",
-    //     paymentStatus: "completed",
-    //   },
-    //   { new: true }
-    // );
-
-    // return successResponseWithData(
-    //   res,
-    //   "Order successfully updated",
-    //   updateProduct
-    // );
   } catch (error) {
     console.log("err", error);
+  }
+};
+
+export const filterProduct = async (req, res) => {
+  try {
+    const userid = req.userid;
+
+    console.log("req.body", req.body);
+
+    const { orderStatus } = req.body;
+
+    console.log("user", userid, orderStatus);
+
+    const userorders = await orderModel.find({ userid: userid }).populate({
+      path: "orderItems",
+      populate: {
+        path: "product",
+        model: "Product",
+      },
+    });
+
+   
+    const newOrders = userorders.filter((order) =>
+      order.orderItems.some((item) => item.orderStatus == orderStatus)
+    );
+
+    console.log("new", newOrders);
+
+    return successResponseWithData(
+      res,
+      "Orders fetched successfully",
+      newOrders
+    );
+  } catch (error) {
+    console.log(error);
   }
 };

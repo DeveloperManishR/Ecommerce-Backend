@@ -36,7 +36,7 @@ export const Createproduct = async (req, res) => {
 export const GetAllproduct = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 100;
+    const limit = parseInt(req.query.limit) || 1000;
     const allProducts = await productModel.find({}).sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
@@ -11733,14 +11733,15 @@ export const updateProduct = async (req, res) => {
     const id = req.params.id;
     console.log(id);
 
-    const { name, price, description, stock, category } = req.body;
+    console.log("rerw",req.body)
 
-    console.log(name, price, description, stock, category);
+    const { title, description, price, stock, category } = req.body;
+    
 
     const product = await productModel.findByIdAndUpdate(
       id,
 
-      { name, price, description, stock, category },
+      { title, description, price, stock, category},
       { new: true }
     );
 
