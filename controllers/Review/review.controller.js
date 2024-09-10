@@ -4,7 +4,7 @@ import productModel from "../../models/Product/product.model.js";
 import orderItemsModel from "../../models/Order/orderItemsModel.js";
 export const addProductReview = async (req, res) => {
   try {
-    const { userid, product, rating, comment,orderItemid } = req.body;
+    const { userid, product, rating, comment, orderItemid } = req.body;
 
     console.log("req.body", req.body);
 
@@ -27,12 +27,13 @@ export const addProductReview = async (req, res) => {
       { new: true }
     );
 
-    const updateProduct=await orderItemsModel.findByIdAndUpdate(
-        orderItemid,
-       {
-        reviewid: addproductreview._id  
-       } , { new: true }
-    )
+    const updateProduct = await orderItemsModel.findByIdAndUpdate(
+      orderItemid,
+      {
+        reviewid: addproductreview._id,
+      },
+      { new: true }
+    );
 
     return successResponseWithData(
       res,
@@ -41,5 +42,26 @@ export const addProductReview = async (req, res) => {
     );
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getProductReview = async(req, res) => {
+
+  console.log("radaa",req.params.id)
+  
+  const productid=req?.params?.id
+
+  try {
+   
+    const getspecificProductReview=await reviewModel.find({product:productid}).populate("userid")
+
+    return successResponseWithData(
+      res,
+      "Review Fetched SucessFully",
+      getspecificProductReview
+    );
+
+  } catch (error) {
+    
   }
 };
