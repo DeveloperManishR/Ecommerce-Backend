@@ -14,6 +14,11 @@ const ordertableSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    reviewid:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review",
+      default:null
+    },
     orderStatus: {
       type: String,
       enum: ["pending", "completed"],
