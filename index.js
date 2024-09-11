@@ -25,10 +25,11 @@ app.use(cors("*"));
 app.use("/api", allRoutes);
 app.use('/public', express.static("public"));
 
-app.listen(process.env.PORT, () => {
-  console.log(`app is Listen on ${process.env.PORT}`);
-});
+// app.listen(process.env.PORT, () => {
+//   console.log(`app is Listen on ${process.env.PORT}`);
+// });
 
 app.get("/", (req, res) => {
   res.send(`<h1>Server is running on Port ${process.env.PORT}</h1>`);
 });
+export default app
