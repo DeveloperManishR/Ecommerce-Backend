@@ -8,8 +8,8 @@ const app=express.Router()
 
 app.post(`/register`,RegisterUser)
 app.post(`/login`,LoginUser)
-app.get("/get-all-users",getAllusers)
-app.get("/getUserById/:id",getUser)
+app.get("/get-all-users",CheckHeaderToken,getAllusers)
+app.get("/getUserById/:id",CheckHeaderToken,getUser)
 app.put("/update-profile-pic",CheckHeaderToken,upload.single("photos"),updateProfilePic)
 
 export default app

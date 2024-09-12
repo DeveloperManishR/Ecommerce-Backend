@@ -29,7 +29,7 @@ export const Createproduct = async (req, res) => {
       category,
       images: uploadedImages,
     }).save();
-    return successResponseWithData(res, "Product Created Sucessfully", product);
+    return successResponse(res, "Product Created Sucessfully",);
   } catch (error) {}
 };
 

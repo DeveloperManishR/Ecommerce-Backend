@@ -1,7 +1,9 @@
-import { Server } from "socket.io"; // Correct import from socket.io
-import { createServer } from "http"; // One import for http is enough
+import { Server } from "socket.io"; 
+import { createServer } from "http"; 
+
 import app from "./index.js";
 import cors from "cors";
+import { handleSendAdminMessage } from "./helpers/NotificationHelper.js";
 
 const server = createServer(app); // Create HTTP server
 const port = process.env.PORT;
@@ -17,16 +19,29 @@ const io = new Server(server, {
     credentials: true,
   },
 });
+const userSockets = {};
 
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
   socket.on("register", async (userId) => {
+    console.log("user",userId)
+    userSockets[userId] = socket.id;
     console.log("User registered with socket id:", userId, socket.id);
+
+    console.log("userSockets",userSockets)
   });
 
+  
+
   socket.on("newOrder",async(data)=>{
-    console.log("New Order has been placed",data)
+  console.log("data",data)
+    try{
+     await handleSendAdminMessage(data,userSockets,io)
+    }catch(error){
+      console.log(error)
+    }
+    
   })
 
   

@@ -5,6 +5,7 @@ import wishlistRoute from "../controllers/Wishlist/wishlist.route.js"
 import cartRoute from "../controllers/Cart/cart.route.js"
 import orderRoute from "../controllers/Order/order.route.js"
 import reviewRoute from "../controllers/Review/review.route.js"
+import notificationRoute from "../controllers/Notification/notification.route.js"
 const app=expres();
 
 app.use("/auth",userRoute)
@@ -13,6 +14,7 @@ app.use("/wishlist",wishlistRoute)
 app.use('/cart',cartRoute)
 app.use('/order',orderRoute)
 app.use('/review',reviewRoute)
+app.use('/notification',notificationRoute)
 
 
 

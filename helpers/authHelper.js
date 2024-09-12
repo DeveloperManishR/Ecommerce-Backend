@@ -28,7 +28,7 @@ export const  CheckHeaderToken=async(req,res,next)=>{
       
         req.userid = decoded._id
         req.token = token;
-        //console.log(decoded, "jwt verified")
+       
         next();
 
 
