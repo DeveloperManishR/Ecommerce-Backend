@@ -118,7 +118,7 @@ export const getUser = async (req, res) => {
       return ErrorResponse(res, "User id was Wrong");
     }
 
-    return successResponse(res, user);
+    return successResponseWithData(res,"Users Fetch SucessFully", user);
   } catch (error) {
     console.log(error);
   }
