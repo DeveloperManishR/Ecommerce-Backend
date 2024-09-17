@@ -13,7 +13,7 @@ export const Createproduct = async (req, res) => {
 
     const uploadedImages = req.files ? req.files.map((file) => file.filename) : [];
 
-    console.log("imagesfiles", req.files);
+    console.log("imagesfiles", uploadedImages);
 
     const checkDuplicateName = await productModel.findOne({ title });
 
@@ -11733,7 +11733,16 @@ export const updateProduct = async (req, res) => {
     const id = req.params.id;
     console.log(id);
 
-    console.log("rerw",req.body)
+    console.log(req.files)
+    const uploadedImages = req.files ? req.files.map((file) => file.filename) : [];
+
+    console.log("imagesfiles", uploadedImages);
+
+    const productDetail=await productModel.findById(id)
+
+    console.log("prod",productDetail.images)
+
+    const finalImages=uploadedImages.concat(...productDetail.images)
 
     const { title, description, price, stock, category } = req.body;
     
@@ -11741,7 +11750,7 @@ export const updateProduct = async (req, res) => {
     const product = await productModel.findByIdAndUpdate(
       id,
 
-      { title, description, price, stock, category},
+      { title, description, price, stock, category,images:finalImages},
       { new: true }
     );
 
