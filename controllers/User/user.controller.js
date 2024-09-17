@@ -13,7 +13,7 @@ export const RegisterUser = async (req, res) => {
     const { fname, lname, email, password, phoneno, role, dob } = req.body;
 
     const checkEmail = await userModel.findOne({ email });
-    console.log("test",checkEmail)
+    console.log("test", checkEmail);
 
     if (checkEmail) {
       return ErrorResponse(res, "User already exists");
@@ -27,7 +27,7 @@ export const RegisterUser = async (req, res) => {
       email,
       password: hashedPassword,
       phoneno,
-      profilePic:"",
+      profilePic: "",
       role,
       dob,
     }).save();
@@ -57,10 +57,10 @@ export const LoginUser = async (req, res) => {
       lname: user.lname,
       phoneno: user.phoneno,
       email: user.email,
-      role:user.role
+      role: user.role,
     };
 
-    console.log("additionalData",additionalData)
+    console.log("additionalData", additionalData);
     const jwtPayload = { _id: user._id, ...additionalData };
 
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET, {
@@ -74,7 +74,7 @@ export const LoginUser = async (req, res) => {
         lname: user.lname,
         email: user.email,
         phoneno: user.phoneno,
-        role:user.role
+        role: user.role,
       },
       token,
     });
@@ -101,7 +101,7 @@ export const getAllusers = async (req, res) => {
         },
       };
     });
-    return successResponseWithData(res,"Users Fetch SucessFully", userDeatils);
+    return successResponseWithData(res, "Users Fetch SucessFully", userDeatils);
   } catch (error) {
     console.log(error);
     return ErrorResponse(res, "Error searching for Users: " + error.message);
@@ -110,7 +110,6 @@ export const getAllusers = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    
     const id = req.params.id;
     const user = await userModel.findById(id);
 
@@ -118,27 +117,24 @@ export const getUser = async (req, res) => {
       return ErrorResponse(res, "User id was Wrong");
     }
 
-    return successResponseWithData(res,"Users Fetch SucessFully", user);
+    return successResponseWithData(res, "Users Fetch SucessFully", user);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const updateProfilePic=async(req, res)=>{
-  console.log("req.files",req.files)
- // const uploadedImages = req.files ? req.files.map((file) => file.path) : [];
-// console.log("req",req.file.path)
+export const updateProfilePic = async (req, res) => {
+  const id = req.params.id;
+  const uploadedImages = req.file;
+  console.log("upload", uploadedImages.filename);
+  try {
+    const updateProfilePic = await userModel.findByIdAndUpdate(id, {
+      profilePic: uploadedImages.filename,
+    });
 
- const uploadedImage=req.file.path
-
- const userid = req.userid;
-
-
- console.log("userid",userid)
- console.log("upload",uploadedImage)
-
-
-
- 
- // console.log("uploadedImages",uploadedImages)
-}
+    console.log("663a0472566f0534b415e89d"), updateProfilePic;
+    return successResponse(res, "Profile Image Upload SucessFully");
+  } catch (error) {
+    console.log("err", error);
+  }
+};
