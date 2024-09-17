@@ -41,9 +41,9 @@ export const GetAllproduct = async (req, res) => {
     .skip((page - 1) * limit)
     .limit(limit);
 
-    // console.log("asa",allProducts)
+   const totalProducts=await productModel.find({})
 
-    return successResponseWithData(res, "Products List", allProducts);
+    return successResponseWithData(res, "Products List fetched SucessFully", allProducts,totalProducts.length);
   } catch (error) {
     console.log(error);
     return ErrorResponse(res, "Error searching for Products: " + error.message);
@@ -11784,4 +11784,6 @@ export const DeleteProduct = async (req, res) => {
   }
 };
 
-export const SearchProduct = async (req, res) => {};
+export const SearchProduct = async (req, res) => {
+  
+};
