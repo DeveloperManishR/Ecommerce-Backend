@@ -6,14 +6,30 @@ export const allOrderslist = async (req, res) => {
   try {
     const userid = req.userid;
 
-    const userorders = await orderModel.find({ userid: userid }).populate({
-      path: "orderItems",
-      populate: {
-        path: "product",
-        model: "Product",
-      },
-    });
+    const userorders = await orderModel
+      .find({ userid: userid })
+      .populate({
+        path: "orderItems",
+        populate: {
+          path: "product",
+          model: "Product",
+        },
+      })
+      .populate({
+        path: "orderItems",
+        populate: {
+          path: "reviewid",
+          model: "Review",
+        },
+      });
 
+    /* 
+
+ populate:{
+        path:"reviewid",
+        model:"Review"
+      }
+    */
     return successResponseWithData(
       res,
       "Orders fetched successfully",
@@ -134,9 +150,15 @@ export const filterProduct = async (req, res) => {
         path: "product",
         model: "Product",
       },
+    })
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "reviewid",
+        model: "Review",
+      },
     });
 
-   
     const newOrders = userorders.filter((order) =>
       order.orderItems.some((item) => item.orderStatus == orderStatus)
     );
