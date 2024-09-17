@@ -11,7 +11,7 @@ export const Createproduct = async (req, res) => {
 
     console.log(title, description, price, stock, category);
 
-    const uploadedImages = req.files ? req.files.map((file) => file.path) : [];
+    const uploadedImages = req.files ? req.files.map((file) => file.filename) : [];
 
     console.log("imagesfiles", req.files);
 
