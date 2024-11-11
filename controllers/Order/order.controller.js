@@ -159,16 +159,39 @@ export const filterProduct = async (req, res) => {
       },
     });
 
-    const newOrders = userorders.filter((order) =>
-      order.orderItems.some((item) => item.orderStatus == orderStatus)
-    );
+    // const newOrders = userorders.filter((order) =>
+    //   order.orderItems.some((item) => item.orderStatus == orderStatus)
+    // );
 
-    console.log("new", newOrders);
+    // console.log("new", newOrders);
 
+    const filterOrderItemsByStatus = (orderStatus) => {
+      return userorders.map(order => {
+        order.orderItems = order.orderItems.filter(item => item.orderStatus === orderStatus);
+        return order;
+      });
+    };
+
+    console.log("filterOrderItemsByStatusfilterOrderItemsByStatusfilterOrderItemsByStatusfilterOrderItemsByStatus",filterOrderItemsByStatus)
+    
+
+
+    const filteredOrders = filterOrderItemsByStatus(orderStatus);
+   
+    const newFilters = filteredOrders.map((item) => {
+      if (item.orderItems.length !== 0) {
+        return item;
+      }
+      return null; // To ensure you don't return undefined or empty values
+    }).filter(item => item !== null);
+    
+    
+
+    
     return successResponseWithData(
       res,
       "Orders fetched successfully",
-      newOrders
+      newFilters
     );
   } catch (error) {
     console.log(error);
