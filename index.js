@@ -20,7 +20,7 @@ app.use(
 //app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.urlencoded({ extended: false, limit: 1000 }));
-app.use(cors("*"));
+app.use(cors("*")) ;
 
 app.use("/api", allRoutes);
 app.use('/public', express.static("public"));
