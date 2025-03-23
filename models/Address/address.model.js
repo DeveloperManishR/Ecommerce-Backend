@@ -12,22 +12,25 @@ const addressSchema=new mongoose.Schema({
         required: true,
       },
 
-      phoneno: {
+      phone: {
         type: Number,
         required: true,
       },
 
-      address:{
+      street:{
         type:String,
         required: true,
       },
 
       state:{
-        type:Object
+        type:String
       },
       
       city:{
-        type:Object
+        type:String
+      },
+      zipcode:{
+        type:Number
       }
 
       

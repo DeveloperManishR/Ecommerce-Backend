@@ -11,13 +11,13 @@ export const AddAddress = async (req, res) => {
 
     try {
 
-        const { name, phoneno, address, state, city } = req.body;
+        const { name, phone, street, state, city,zipcode } = req.body;
 
         
 
         const addnewAddress = await new addressModel({
             userid,
-            name, phoneno, address, state, city
+            name, phone, street, state, city,zipcode
         }).save()
         return successResponseWithData(res, "Address Added Sucessfully", addnewAddress);
     } catch (error) {

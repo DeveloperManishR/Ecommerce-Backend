@@ -7,7 +7,7 @@ const app=express.Router()
 
 app.post("/:id",CheckHeaderToken,AddtoCart)
 app.get("/",CheckHeaderToken,getCartproducts)
-app.put("/decrease/:id",CheckHeaderToken,decreaseProductquantity)
+app.put("/:id",CheckHeaderToken,decreaseProductquantity)
 app.delete("/:id",CheckHeaderToken,DeletefromCart)
 app.delete("/all-products-remove",CheckHeaderToken,removeAllproductsFromCart)
 
