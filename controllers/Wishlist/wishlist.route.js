@@ -5,8 +5,8 @@ import { AddtoWishlist, deleteWishlistProduct, getWishlistProducts } from "./wis
 const app=express.Router()
 
 
-app.post("/add-to-wishlist/:id",CheckHeaderToken,AddtoWishlist)
-app.get("/get-wishlist-products",CheckHeaderToken,getWishlistProducts)
-app.delete('/delete-wishlist-product/:id',CheckHeaderToken,deleteWishlistProduct)
+app.post("/:id",CheckHeaderToken,AddtoWishlist)
+app.get("/",CheckHeaderToken,getWishlistProducts)
+app.delete('/:id',CheckHeaderToken,deleteWishlistProduct)
 
 export default app

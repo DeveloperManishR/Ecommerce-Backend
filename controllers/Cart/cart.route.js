@@ -5,10 +5,10 @@ import { AddtoCart, DeletefromCart, decreaseProductquantity, getCartproducts, re
 const app=express.Router()
 
 
-app.post("/add-to-cart/:id",CheckHeaderToken,AddtoCart)
-app.get("/get-cart-products",CheckHeaderToken,getCartproducts)
-app.put("/decrease-product-quantity/:id",CheckHeaderToken,decreaseProductquantity)
-app.delete("/remove-from-cart/:id",CheckHeaderToken,DeletefromCart)
+app.post("/:id",CheckHeaderToken,AddtoCart)
+app.get("/",CheckHeaderToken,getCartproducts)
+app.put("/decrease/:id",CheckHeaderToken,decreaseProductquantity)
+app.delete("/:id",CheckHeaderToken,DeletefromCart)
 app.delete("/all-products-remove",CheckHeaderToken,removeAllproductsFromCart)
 
 

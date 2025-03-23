@@ -8,12 +8,13 @@ const app=express.Router()
   
   
 
-app.post("/create-product",CheckHeaderToken,uploadMultiImages.array("images",4),Createproduct)
-app.get("/get-all-products",GetAllproduct)
-app.get('/get-all-category',GetallCategory)
-app.get('/getproduct-detail/:id',GetSingleproductDetail)
-app.put('/update-product/:id',CheckHeaderToken,uploadMultiImages.array("images",4),updateProduct)
-app.delete('/delete-product/:id',CheckHeaderToken,DeleteProduct)
+app.post("/",CheckHeaderToken,uploadMultiImages.array("images",4),Createproduct)
+app.get("/",GetAllproduct)
+//app.get('/')
+app.get('/category',GetallCategory)
+app.get('/:id',GetSingleproductDetail)
+app.put('/:id',CheckHeaderToken,uploadMultiImages.array("images",4),updateProduct)
+app.delete('/:id',CheckHeaderToken,DeleteProduct)
 app.post("/add-multiple-prodcuts",CheckHeaderToken,AddMultipleProduct)
 
 
