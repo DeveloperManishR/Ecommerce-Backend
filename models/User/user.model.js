@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema(
     },
     profilePic:{
       type:String
+    },
+    customerId:{
+      type:String,
+      default :null
     }
     
   },
