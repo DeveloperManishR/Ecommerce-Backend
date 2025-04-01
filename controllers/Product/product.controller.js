@@ -50,6 +50,20 @@ export const GetAllproduct = async (req, res) => {
   }
 };
 
+export const TopSellingProduct=async(req,res)=>{
+
+  try{
+    const getTopSellingProducts = await productModel.find({ rating: { $gt: 4.7 } });
+
+    return successResponseWithData(res, "Products List fetched SucessFully", getTopSellingProducts,);
+
+  }catch(
+    error
+  ){
+    return ErrorResponse(res, "Error searching for Products: " + error.message);
+  }
+}
+
 export const AddMultipleProduct = async (req, res) => {
   const { data } = req.body;
 
@@ -11705,13 +11719,26 @@ export const GetallCategory = async (req, res) => {
   try {
     //distinct is use for unique
     const allCategory = await productModel.distinct("category");
-    console.log(allCategory);
+  //  console.log(allCategory);
     return successResponseWithData(res, "category List  fetched", allCategory);
   } catch (error) {
     console.log(error);
     return ErrorResponse(res, "Error searching for Category: " + error.message);
   }
 };
+
+export const GetallCategoryProducts=async(req,res)=>{
+
+  console.log("asdasdas",req.params)
+   const categoryName=req.params.id
+  try{
+   const allCategoryProducts=await productModel.find({category:categoryName})
+   return successResponseWithData(res, "category List  fetched", allCategoryProducts);
+  }catch(error){
+    return ErrorResponse(res, "Error searching for Category: " + error.message);
+  }
+
+}
 
 export const GetSingleproductDetail = async (req, res) => {
   try {
