@@ -133,35 +133,31 @@ export const checkoutSession = async (req, res) => {
           description: item.product.description,
           images: item.product.images,
         },
-        unit_amount: item.product.price * 100,
+        unit_amount: Math.round(item.product.price * 100), // ✅ Fixed here
       },
       quantity: item.quantity,
     }));
+    
 
-    console.log("extractingItemsextractingItems", extractingItems);
-
+  
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: extractingItems,
       mode: "payment",
-      success_url: `${YOUR_DOMAIN}?success=true`,
-      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      success_url: `${YOUR_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${YOUR_DOMAIN}/canceled`,
+      // metadata:{
+      //   getUserDetails?.email,
+      // }
     });
 
     return successResponseWithData(
       res,
       "Checkout Session Created Sucessfully",
-      session
+      session.id
     );
 
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //   amount: totalAmount,
-    //   currency: 'usd',
-    //   customer: stripeCustomerId,
-    //   description: 'Payment for order from Counselling Conversations',
-    //   //automatic_payment_methods: { enabled: true },
-    //   metadata: { userId: userid },
-    // });
+    
   } catch (error) {
     console.log(error);
   }

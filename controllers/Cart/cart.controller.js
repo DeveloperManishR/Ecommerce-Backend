@@ -138,7 +138,7 @@ export const decreaseProductquantity = async (req, res) => {
           return ErrorResponse(res, "Product not found");
         }
 
-        return successResponse(res, deleteCartItems);
+        return successResponse(res,"Product Removed  Sucessfully", deleteCartItems);
       } else {
         const decreaseQuantity = cartItems[0].quantity - 1;
         console.log(decreaseQuantity);
