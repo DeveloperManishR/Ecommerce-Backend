@@ -21,10 +21,10 @@ export const  CheckHeaderToken=async(req,res,next)=>{
         const token = req.headers.Authorization || req.headers.authorization;
 
         const jwtData = {
-            expiresIn: process.env.EXPIRES_IN,
+            expiresIn: "5D",
         };
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET, jwtData);
+        const decoded = jwt.verify(token, "cxvcxvcx", jwtData);
       
         req.userid = decoded._id
         req.token = token;
