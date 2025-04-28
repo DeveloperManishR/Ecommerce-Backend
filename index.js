@@ -30,6 +30,6 @@ app.use('/public', express.static("public"));
 // });
 
 app.get("/", (req, res) => {
-  res.send(`<h1>Server is running on Port ${process.env.PORT}</h1>`);
+  res.send(`<h1>Server is running on Port ${process.env.PORT} ${process.env.MONGO_URL}  </h1>`);
 });
 export default app
